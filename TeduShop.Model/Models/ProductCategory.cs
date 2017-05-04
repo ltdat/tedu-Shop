@@ -29,7 +29,7 @@ namespace TeduShop.Model.Models
         public string Image { get; set; }
 
         public bool? HomeFlag { set; get; }
-
+        
         public virtual IEnumerable<Product> Products { set; get; }
     }
 }
