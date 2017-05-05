@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,8 @@ using System.Web.Http;
 using TeduShop.Model.Models;
 using TeduShop.Service;
 using TeduShop.Web.Infrastructure.Core;
+using TeduShop.Web.Infrastructure.Extensions;
+using TeduShop.Web.Models;
 
 namespace TeduShop.Web.Api
 {
@@ -27,16 +30,17 @@ namespace TeduShop.Web.Api
                  
 
                 var listCategory = _postCategoryServie.GetAll();
+                var listPostCategoryVm = Mapper.Map<List<PostCategoryViewModel>>(listCategory);
                 _postCategoryServie.Save();
 
-                HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, listCategory);
+                HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, listPostCategoryVm);
 
                 return response;
 
             });
         }
-
-        public HttpResponseMessage Post(HttpRequestMessage request, PostCategory postCategory)
+        [Route("add")]
+        public HttpResponseMessage Post(HttpRequestMessage request, PostCategoryViewModel postCategoryVm)
         {
             return CreateHttpResponse(request, () =>
              {
@@ -47,7 +51,9 @@ namespace TeduShop.Web.Api
                  }
                  else
                  {
-                     var category = _postCategoryServie.Add(postCategory);
+                     PostCategory newPostCategory = new PostCategory();
+                     newPostCategory.UpdatePostCategory(postCategoryVm);
+                     var category = _postCategoryServie.Add(newPostCategory);
                      _postCategoryServie.Save();
 
                      response = request.CreateResponse(HttpStatusCode.Created, category);
@@ -57,19 +63,22 @@ namespace TeduShop.Web.Api
              });
         }
 
-
-        public HttpResponseMessage Put(HttpRequestMessage request, PostCategory postCategory)
+        [Route("update")]
+        public HttpResponseMessage Put(HttpRequestMessage request, PostCategoryViewModel postCategoryVm)
         {
             return CreateHttpResponse(request, () =>
             {
-                HttpResponseMessage response = null;
-                if (ModelState.IsValid)
-                {
-                    request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-                }
-                else
-                {
-                    _postCategoryServie.Update(postCategory);
+            HttpResponseMessage response = null;
+            if (ModelState.IsValid)
+            {
+                request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+            else
+            {
+                var postCategoryDb = _postCategoryServie.GetById(postCategoryVm.ID);
+                    postCategoryDb.UpdatePostCategory(postCategoryVm);
+
+                    _postCategoryServie.Update(postCategoryDb);
                     _postCategoryServie.Save();
 
                     response = request.CreateResponse(HttpStatusCode.OK);
