@@ -14,14 +14,12 @@
 </head>
 <body>
     <div ng-controller="schoolController">
-        <div ng-controller="studentController">
-            From student: {{message}}
-        </div>
-        <div ng-controller="teacherController">
-            From teacher: {{message}}
-        </div>
+        <input type="number"ng-model="num" /> Value of text box: {{num}}
+        
+       <button ng-click="checkNumber()">Check number</button>
+        <br/>
         {{message}}
-    </div> 
-   
+    </div>
+
 </body>
 </html>
