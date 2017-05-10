@@ -5,6 +5,7 @@
         'tedushop.product_categories',
         'tedushop.common']).config(config);
 
+    config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
     function config($stateProvider, $urlRouterProvider) {
         $stateProvider.state('home', {
