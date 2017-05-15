@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using TeduShop.Model.Models;
 using TeduShop.Web.Models;
+using TeduShop.Web.Infrastructure.Extensions;
 
 namespace TeduShop.Web.Infrastructure.Extensions
 {
@@ -28,6 +29,29 @@ namespace TeduShop.Web.Infrastructure.Extensions
             postCategory.MetaKeyword = postCategoryVM.MetaKeyword;
             postCategory.Status = postCategoryVM.Status;
         }
+
+
+
+        public static void UpdateProductCategory(this ProductCategory productCategory, ProductCategoryViewModel productCategoryVM)
+        {
+            productCategory.ID = productCategoryVM.ID;
+            productCategory.Name = productCategoryVM.Name;
+            productCategory.Alias = productCategoryVM.Alias;
+            productCategory.Description = productCategoryVM.Description;
+            productCategory.ParentID = productCategoryVM.ParentID;
+            productCategory.DisplayOrder = productCategoryVM.DisplayOrder;
+            productCategory.Image = productCategoryVM.Image;
+            productCategory.HomeFlag = productCategoryVM.HomeFlag;
+                
+            productCategory.CreatedDate = productCategoryVM.CreatedDate;
+            productCategory.CreatedBy = productCategoryVM.CreatedBy;
+            productCategory.UpdatedDate = productCategoryVM.UpdatedDate;
+            productCategory.UpdatedBy = productCategoryVM.UpdatedBy;
+            productCategory.MetaDescription = productCategoryVM.MetaDescription;
+            productCategory.MetaKeyword = productCategoryVM.MetaKeyword;
+            productCategory.Status = productCategoryVM.Status;
+        }
+
         public static void UpdatePost(this Post post, PostViewModel postVM)
         {
             post.ID = postVM.ID;

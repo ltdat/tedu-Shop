@@ -11,10 +11,10 @@
             "extendedTimeOut": 1000
         };
         
-        function success(message) {
+        function displaySuccess(message) {
             toastr.success(message);
         }
-        function error(error) {
+        function displayError(error) {
             if (Array.isArray(error)) {
                 error.each(function (err) {
                     toastr.error(err);
@@ -24,18 +24,18 @@
                 toastr.error(error);
             }
         }
-        function warning(message) {
+        function displayWarning(message) {
             toastr.warning(message);
         }
-        function info(message) {
+        function displayInfo(message) {
             toastr.info(message);
         }
 
         return {
-            success: success,
-            error: error,
-            warning: warning,
-            info: info
+            displaySuccess: displaySuccess,
+            displayError: displayError,
+            displayWarning: displayWarning,
+            displayInfo: displayInfo
         }
     }
 })(angular.module('tedushop.common'));
