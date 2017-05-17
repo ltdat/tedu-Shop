@@ -8,9 +8,10 @@ namespace TeduShop.Web.Models
 {
     public class ProductCategoryViewModel
     {
+
         public int ID { set; get; }
 
-        [Required]
+        [Required(ErrorMessage ="Yêu cầu nhập tên danh mục")]
         public string Name { set; get; }
 
         [Required]
