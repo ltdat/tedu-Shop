@@ -21,7 +21,8 @@ namespace TeduShop.Web.Infrastructure.Core
 
         protected HttpResponseMessage CreateHttpResponse(HttpRequestMessage requestMessage, Func<HttpResponseMessage> function)
         {
-            HttpResponseMessage response = null;
+            HttpResponseMessage response = new HttpResponseMessage();
+            requestMessage = new HttpRequestMessage();
             try
             {
                 response = function.Invoke();
@@ -37,7 +38,7 @@ namespace TeduShop.Web.Infrastructure.Core
                     }
                 }
                 LogError(ex);
-                response = requestMessage.CreateErrorResponse(HttpStatusCode.BadRequest, ex.InnerException.Message);
+                response =  requestMessage.CreateErrorResponse(HttpStatusCode.BadRequest, ex.InnerException.Message);
             }
             catch (DbUpdateException dbEx)
             {
