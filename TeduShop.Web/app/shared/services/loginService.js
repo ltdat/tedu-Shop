@@ -11,7 +11,7 @@
             $http.post('/oauth/token', data, {
                 headers:
                    { 'Content-Type': 'application/x-www-form-urlencoded' }
-            }).success(function (response) {
+            }).then(function (response) {
                 userInfo = {
                     accessToken: response.access_token,
                     userName: userName
@@ -20,12 +20,12 @@
                 authData.authenticationData.IsAuthenticated = true;
                 authData.authenticationData.userName = userName;
                 deferred.resolve(null);
-            })
-            .error(function (err, status) {
+            }, function (err, status) {
                 authData.authenticationData.IsAuthenticated = false;
                 authData.authenticationData.userName = "";
                 deferred.resolve(err);
-            });
+            })
+
             return deferred.promise;
         }
 

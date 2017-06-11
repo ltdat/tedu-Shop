@@ -22,11 +22,10 @@ namespace TeduShop.Web.App_Start
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(TeduShopDbContext.Create);
-
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
-            app.CreatePerOwinContext<UserManager<ApplicationUser>>(CreateManager);
 
+            app.CreatePerOwinContext<UserManager<ApplicationUser>>(CreateManager);
             app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/oauth/token"),
@@ -85,7 +84,9 @@ namespace TeduShop.Web.App_Start
                 }
                 if (user != null)
                 {
-                    ClaimsIdentity identity = await userManager.CreateIdentityAsync(user,DefaultAuthenticationTypes.ExternalBearer);
+                    ClaimsIdentity identity = await userManager.CreateIdentityAsync(
+                                                           user,
+                                                           DefaultAuthenticationTypes.ExternalBearer);
                     context.Validated(identity);
                 }
                 else
